@@ -12,39 +12,40 @@ enum status
 };
 int gamestatus = running;
 int jump = 0;
+int start=0;
 class layout
 {
   public:
     void background()
     {
-	setcolor(RED);
-	settextstyle(1, HORIZ_DIR, 1);
-	outtextxy(5, 5, "Press X to Exit");
-	settextstyle(1, HORIZ_DIR, 1);
-	outtextxy(250, 5, "Press space to jump");
-	settextstyle(1, HORIZ_DIR, 1);
-	outtextxy(500, 5, "score");
-	setcolor(GREEN);
-	rectangle(0, 400, 800, 500);
-	setfillstyle(SOLID_FILL, GREEN);
-	floodfill(2, 450, GREEN);
+        setcolor(RED);
+        settextstyle(1, HORIZ_DIR, 1);
+        outtextxy(5, 5, "Press X to Exit");
+        settextstyle(1, HORIZ_DIR, 1);
+        outtextxy(250, 5, "Press space to jump");
+        settextstyle(1, HORIZ_DIR, 1);
+        outtextxy(500, 5, "score");
+        setcolor(GREEN);
+        rectangle(0, 400, 800, 500);
+        setfillstyle(SOLID_FILL, GREEN);
+        floodfill(2, 450, GREEN);
     }
     void score(int scr)
     {
-	settextstyle(1, HORIZ_DIR, 1);
-	outtextxy(550, 5, " score");
+        settextstyle(1, HORIZ_DIR, 1);
+        outtextxy(550, 5, " score");
     }
     void pause()
     {
-	settextstyle(1, HORIZ_DIR, 4);
-	outtextxy(100, 200, "PAUSED");
-	getch();
+        settextstyle(1, HORIZ_DIR, 4);
+        outtextxy(100, 200, "PAUSED");
+        getch();
     }
     void game_over()
     {
-	settextstyle(1, HORIZ_DIR, 4);
-	outtextxy(100, 200, "Game Over");
-	getch();
+        settextstyle(1, HORIZ_DIR, 4);
+        outtextxy(100, 200, "Game Over");
+        getch();
     }
 };
 class stickman
@@ -55,71 +56,33 @@ class stickman
     int y;
     stickman()
     {
-	x = 30;
-	y = 250;
+        x = 30;
+        y = 250;
     }
-    /*stickman(int x_cor, int y_cor)
-    {
-	x = x_cor;
-	y = y_cor;
-    }*/
     void draw()
     {
 
-	if (jump == 1)
-	{
-	    for (int j = 0; j < 5; j++)
-	    {
-		setcolor(YELLOW);
-		circle(x, y, x);
-		setfillstyle(SOLID_FILL, YELLOW);
-		floodfill(x, y, YELLOW);
-		setcolor(BLACK);
-		setfillstyle(SOLID_FILL, BLACK);
-		fillellipse(x - 10, y - 10, 2, 6);
-		fillellipse(x + 10, y - 10, 2, 6);
-		ellipse(x, y + 3, 205, 335, 18, 10);
-		setcolor(WHITE);
-		ellipse(x, y + 3, 205, 335, 18, 11);
-		ellipse(x, y + 3, 205, 335, 18, 12);
-		ellipse(x, y + 3, 205, 335, 18, 13);
-		setcolor(BLACK);
-		ellipse(x, y + 3, 205, 335, 18, 14);
-		setcolor(WHITE);
-		line(x, y + 30, x, y + 100);
-		line(x, y + 100, x - 30, y + 150);
-		line(x, y + 100, x + 30, y + 150);
-		line(x - 20, y + 50, x, y + 70);
-		line(x, y + 70, x + 20, y + 50);
-	    }
-	    x = 30;
-	    y = 250;
-	    jump = 0;
-	}
-	else
-	{
-	    setcolor(YELLOW);
-	    circle(x, y, x);
-	    setfillstyle(SOLID_FILL, YELLOW);
-	    floodfill(x, y, YELLOW);
-	    setcolor(BLACK);
-	    setfillstyle(SOLID_FILL, BLACK);
-	    fillellipse(x - 10, y - 10, 2, 6);
-	    fillellipse(x + 10, y - 10, 2, 6);
-	    ellipse(x, y + 3, 205, 335, 18, 10);
-	    setcolor(WHITE);
-	    ellipse(x, y + 3, 205, 335, 18, 11);
-	    ellipse(x, y + 3, 205, 335, 18, 12);
-	    ellipse(x, y + 3, 205, 335, 18, 13);
-	    setcolor(BLACK);
-	    ellipse(x, y + 3, 205, 335, 18, 14);
-	    setcolor(WHITE);
-	    line(x, y + 30, x, y + 100);
-	    line(x, y + 100, x - 30, y + 150);
-	    line(x, y + 100, x + 30, y + 150);
-	    line(x - 20, y + 50, x, y + 70);
-	    line(x, y + 70, x + 20, y + 50);
-	}
+        setcolor(YELLOW);
+        circle(x, y, 30);
+        setfillstyle(SOLID_FILL, YELLOW);
+        floodfill(x, y, YELLOW);
+        setcolor(BLACK);
+        setfillstyle(SOLID_FILL, BLACK);
+        fillellipse(x - 10, y - 10, 2, 6);
+        fillellipse(x + 10, y - 10, 2, 6);
+        ellipse(x, y + 3, 205, 335, 18, 10);
+        setcolor(WHITE);
+        ellipse(x, y + 3, 205, 335, 18, 11);
+        ellipse(x, y + 3, 205, 335, 18, 12);
+        ellipse(x, y + 3, 205, 335, 18, 13);
+        setcolor(BLACK);
+        ellipse(x, y + 3, 205, 335, 18, 14);
+        setcolor(WHITE);
+        line(x, y + 30, x, y + 100);
+        line(x, y + 100, x - 30, y + 150);
+        line(x, y + 100, x + 30, y + 150);
+        line(x - 20, y + 50, x, y + 70);
+        line(x, y + 70, x + 20, y + 50);
     }
 };
 class bushes
@@ -127,16 +90,18 @@ class bushes
   public:
     int x;
     int y;
+    int d;
+    int speed;
     bushes()
     {
-	x = 630;
-	y = 360;
+        x = 630;
+        y = 360;
+        d = 0;
+        speed = 20;
     }
     void draw()
     {
-	int d = 0;
-        int speed = 20;
-        int gameover = 0;
+
         setcolor(RED);
         circle(x - d, y, 10);
         setfillstyle(WIDE_DOT_FILL, RED);
@@ -149,7 +114,7 @@ class bushes
             speed = speed + 10;
         }
 
-        if (d >= 610 && jump == 0)
+        if (d >= 610 && jump == 0 && start==1)
         {
             gamestatus = over;
         }
@@ -159,16 +124,29 @@ class bushes
 layout l;
 bushes b;
 stickman s;
+int count=0;
 void input()
 {
+    
     char ch;
-    ch = getch();
+    if(count==0)
+    {
+         ch = getch();
+    }
+
+    if (count > 0)
+    {
+        s.y = s.y + 10;
+        count--;
+    }
     if (ch == ' ')
     {
         s.x = 30;
         s.y = s.y - 50;
         jump = 1;
-        gamestatus = running;
+        count = 5;
+        start=1;
+
     }
     else if (ch == 'p')
     {
@@ -212,12 +190,16 @@ int main()
     cleardevice();
     while (gamestatus == running)
     {
+        while (!kbhit())
+        {
+            draw();
+        }
         input();
         draw();
         // delay(100);
     }
 
-    getch();
+  //  getch();
     closegraph();
     return 0;
 }
