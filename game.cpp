@@ -3,6 +3,7 @@
 #include <graphics.h>
 #include <conio.h>
 #include <dos.h>
+#include <stdio.h>
 enum status
 {
     running,
@@ -12,7 +13,7 @@ enum status
 };
 int gamestatus = running;
 int jump = 0;
-int start=0;
+int start = 0;
 class layout
 {
   public:
@@ -111,10 +112,10 @@ class bushes
         if (d == 630)
         {
             d = 0;
-            speed = speed + 10;
+            speed = speed + 20;
         }
 
-        if (d >= 610 && jump == 0 && start==1)
+        if (d >= 610 && jump == 0 && start == 1)
         {
             gamestatus = over;
         }
@@ -124,42 +125,45 @@ class bushes
 layout l;
 bushes b;
 stickman s;
-int count=0;
+int count = 0;
 void input()
 {
-    
+
     char ch;
-    if(count==0)
+    if (count == 0)
     {
-         ch = getch();
+        //s.y=250;
+        fflush(stdin);
+        ch = getch();
+        if (ch == ' ')
+        {
+            s.x = 30;
+            s.y = s.y - 50;
+            jump = 1;
+            count = 5;
+            start = 1;
+            fflush(stdin);
+        }
+        else if (ch == 'p')
+        {
+            gamestatus = pause;
+        }
+        else if (ch == 'x')
+        {
+            gamestatus = quit;
+        }
     }
 
-    if (count > 0)
+    else if (count > 0)
     {
         s.y = s.y + 10;
         count--;
     }
-    if (ch == ' ')
-    {
-        s.x = 30;
-        s.y = s.y - 50;
-        jump = 1;
-        count = 5;
-        start=1;
-
-    }
-    else if (ch == 'p')
-    {
-        gamestatus = pause;
-    }
-    else if (ch == 'x')
-    {
-        gamestatus = quit;
-    }
 }
 void draw()
 {
-
+    //setcolor(BLACK);
+    //  cleardevice();
     if (gamestatus == running)
     {
         l.background();
@@ -190,16 +194,21 @@ int main()
     cleardevice();
     while (gamestatus == running)
     {
+        setcolor(BLACK);
+        cleardevice();
         while (!kbhit())
         {
+            setcolor(BLACK);
+            cleardevice();
             draw();
+            delay(100);
         }
         input();
         draw();
-        // delay(100);
+        delay(100);
     }
 
-  //  getch();
+    //  getch();
     closegraph();
     return 0;
 }
