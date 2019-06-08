@@ -86,6 +86,8 @@ class stickman
         line(x, y + 70, x + 20, y + 50);
     }
 };
+
+int show=0;
 class bushes
 {
   public:
@@ -95,28 +97,29 @@ class bushes
     int speed;
     bushes()
     {
-        x = 630;
-        y = 360;
-        d = 0;
-        speed = 20;
+	x = 630;
+	y = 360;
+	d = 0;
+	speed = 20;
     }
+
     void draw()
     {
 
-        setcolor(RED);
-        circle(x - d, y, 10);
-        setfillstyle(WIDE_DOT_FILL, RED);
-        floodfill(x - d, y, RED);
-        line(x - d, y + 10, x - d, y + 40);
-        d = d + speed;
-        if (d == 630)
-        {
-            d = 0;
-            speed = speed + 20;
-        }
+	setcolor(RED);
+	circle(x - d, y, 10);
+	setfillstyle(WIDE_DOT_FILL, RED);
+	floodfill(x - d, y, RED);
+	line(x - d, y + 10, x - d, y + 40);
+	d = d + speed;
+	if (d == 630)
+	{
+	    d = 0;
+	    speed = speed + 20;
+	}
 
-        if (d >= 610 && jump == 0 && start == 1)
-        {
+	if (d >= 610 && start !=0 && jump!=1 )
+	{
             gamestatus = over;
         }
     }
@@ -135,43 +138,43 @@ void input()
     if (ch == ' ')
     {
 
-        jump = 1;
-        count = 5;
-        start = 1;
-        // fflush(stdin);
+	jump = 1;
+	start = 1;
     }
     else if (ch == 'p')
     {
-        gamestatus = pause;
+	gamestatus = pause;
     }
     else if (ch == 'x')
     {
-        gamestatus = quit;
+	gamestatus = quit;
     }
 }
+//int show=0;
 void update()
 {
-    if (count == 0)
+
+    if (jump == 1)
     {
-        if (jump == 1)
-        {
-            s.x = 30;
-            s.y = s.y - 50;
-            count = 5;
-            jump = 0;
-        }
+	s.x = 30;
+	s.y = s.y - 100;
+   // show=1;
+    start=0;
+	count = 10;
+	jump = 0;
     }
+
     else if (count > 0)
     {
-        s.y = s.y + 10;
-        count--;
+	s.y = s.y + 10;
+	count--;
     }
+    
 }
 
 void draw()
 {
-    //setcolor(BLACK);
-    //  cleardevice();
+    
     if (gamestatus == running)
     {
         l.background();
@@ -204,20 +207,18 @@ int main()
     {
         setcolor(BLACK);
         cleardevice();
-        if (!kbhit())
+        if (kbhit())
         {
-            /*setcolor(BLACK);
+            setcolor(BLACK);
             cleardevice();
-            draw();
-            delay(100);*/
+            //  draw();
+            delay(100);
             input();
         }
         update();
         draw();
         delay(100);
     }
-
-    //  getch();
     closegraph();
     return 0;
 }
