@@ -130,36 +130,44 @@ void input()
 {
 
     char ch;
+
+    ch = getch();
+    if (ch == ' ')
+    {
+
+        jump = 1;
+        count = 5;
+        start = 1;
+        // fflush(stdin);
+    }
+    else if (ch == 'p')
+    {
+        gamestatus = pause;
+    }
+    else if (ch == 'x')
+    {
+        gamestatus = quit;
+    }
+}
+void update()
+{
     if (count == 0)
     {
-        //s.y=250;
-        fflush(stdin);
-        ch = getch();
-        if (ch == ' ')
+        if (jump == 1)
         {
             s.x = 30;
             s.y = s.y - 50;
-            jump = 1;
             count = 5;
-            start = 1;
-            fflush(stdin);
-        }
-        else if (ch == 'p')
-        {
-            gamestatus = pause;
-        }
-        else if (ch == 'x')
-        {
-            gamestatus = quit;
+            jump = 0;
         }
     }
-
     else if (count > 0)
     {
         s.y = s.y + 10;
         count--;
     }
 }
+
 void draw()
 {
     //setcolor(BLACK);
@@ -196,14 +204,15 @@ int main()
     {
         setcolor(BLACK);
         cleardevice();
-        while (!kbhit())
+        if (!kbhit())
         {
-            setcolor(BLACK);
+            /*setcolor(BLACK);
             cleardevice();
             draw();
-            delay(100);
+            delay(100);*/
+            input();
         }
-        input();
+        update();
         draw();
         delay(100);
     }
