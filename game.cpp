@@ -11,12 +11,19 @@ enum status
     quit,
     over
 };
-int gamestatus = running;
+int gamestatus;
 int jump = 0;
 int start = 0;
+int scr = 0;
 class layout
 {
   public:
+    void start()
+    {
+        setcolor(RED);
+        settextstyle(1, HORIZ_DIR, 4);
+        outtextxy(100, 200, "press y to start game");
+    }
     void background()
     {
         setcolor(RED);
@@ -31,19 +38,24 @@ class layout
         setfillstyle(SOLID_FILL, GREEN);
         floodfill(2, 450, GREEN);
     }
-    void score(int scr)
+    void score()
     {
+        char msg[10];
+        setcolor(RED);
         settextstyle(1, HORIZ_DIR, 1);
-        outtextxy(550, 5, " score");
+        sprintf(msg, "%d", scr);
+        outtextxy(550, 5, msg);
     }
     void pause()
     {
+        setcolor(RED);
         settextstyle(1, HORIZ_DIR, 4);
         outtextxy(100, 200, "PAUSED");
         getch();
     }
     void game_over()
     {
+        setcolor(RED);
         settextstyle(1, HORIZ_DIR, 4);
         outtextxy(100, 200, "Game Over");
         getch();
@@ -87,7 +99,7 @@ class stickman
     }
 };
 
-int show=0;
+int show = 0;
 class bushes
 {
   public:
@@ -97,31 +109,20 @@ class bushes
     int speed;
     bushes()
     {
-	x = 630;
-	y = 360;
-	d = 0;
-	speed = 20;
+        x = 620;
+        y = 360;
+        d = 0;
+        speed = 20;
     }
 
     void draw()
     {
 
-	setcolor(RED);
-	circle(x - d, y, 10);
-	setfillstyle(WIDE_DOT_FILL, RED);
-	floodfill(x - d, y, RED);
-	line(x - d, y + 10, x - d, y + 40);
-	d = d + speed;
-	if (d == 630)
-	{
-	    d = 0;
-	    speed = speed + 20;
-	}
-
-	if (d >= 610 && start !=0 && jump!=1 )
-	{
-            gamestatus = over;
-        }
+        setcolor(RED);
+        circle(x - d, y, 10);
+        setfillstyle(WIDE_DOT_FILL, RED);
+        floodfill(x - d, y, RED);
+        line(x - d, y + 10, x - d, y + 40);
     }
 };
 
@@ -138,49 +139,67 @@ void input()
     if (ch == ' ')
     {
 
-	jump = 1;
-	start = 1;
+        jump = 1;
+        start = 1;
+    }
+    else if (ch == 'y')
+    {
+        gamestatus = running;
     }
     else if (ch == 'p')
     {
-	gamestatus = pause;
+        gamestatus = pause;
     }
     else if (ch == 'x')
     {
-	gamestatus = quit;
+        gamestatus = quit;
     }
 }
-//int show=0;
 void update()
 {
 
     if (jump == 1)
     {
-	s.x = 30;
-	s.y = s.y - 100;
-   // show=1;
-    start=0;
-	count = 10;
-	jump = 0;
+        s.x = 30;
+        s.y = s.y - 100;
+        start = 0;
+        count = 10;
+        // jump = 0;
     }
 
     else if (count > 0)
     {
-	s.y = s.y + 10;
-	count--;
+        s.y = s.y + 10;
+        count--;
     }
-    
+
+    b.d = b.d + b.speed;
+    if (b.d >= 620)
+    {
+        b.d = 0;
+        scr += 1;
+        b.speed = b.speed + 5;
+        if (b.speed > 40)
+        {
+            b.speed = 20;
+        }
+    }
+
+    if (b.d >= 600 && jump != 1)
+    {
+        gamestatus = over;
+    }
 }
 
 void draw()
 {
-    
+
     if (gamestatus == running)
     {
         l.background();
         s.draw();
         b.draw();
-        l.score(5);
+        l.score();
     }
     else if (gamestatus == over)
     {
@@ -203,15 +222,15 @@ int main()
     initgraph(&gd, &gm, "C:\\TC\\BGI");
     setcolor(BLACK);
     cleardevice();
+    l.start();
+    input();
     while (gamestatus == running)
     {
+        jump = 0;
         setcolor(BLACK);
         cleardevice();
         if (kbhit())
         {
-            setcolor(BLACK);
-            cleardevice();
-            //  draw();
             delay(100);
             input();
         }
