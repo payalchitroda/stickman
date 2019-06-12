@@ -130,6 +130,7 @@ layout l;
 bushes b;
 stickman s;
 int count = 0;
+//int jump_count = 0;
 void input()
 {
 
@@ -137,10 +138,12 @@ void input()
 
     ch = getch();
     if (ch == ' ')
+   // if (ch == ' ' && jump_count < 2)
     {
 
         jump = 1;
         start = 1;
+        //jump_count++;
     }
     else if (ch == 'y')
     {
@@ -162,7 +165,7 @@ void update()
     {
         s.x = 30;
         s.y = s.y - 100;
-        start = 0;
+        start = 1;
         count = 10;
         // jump = 0;
     }
@@ -171,6 +174,10 @@ void update()
     {
         s.y = s.y + 10;
         count--;
+       // if(jump_count==2)
+        //{
+          //  jump_count=0;
+        //}
     }
 
     b.d = b.d + b.speed;
@@ -185,7 +192,7 @@ void update()
         }
     }
 
-    if (b.d >= 600 && jump != 1)
+    if (b.d >= 580 && start != 1)
     {
         gamestatus = over;
     }
@@ -226,12 +233,16 @@ int main()
     input();
     while (gamestatus == running)
     {
+        if (count == 0)
+        {
+            start = 0;
+        }
         jump = 0;
         setcolor(BLACK);
         cleardevice();
         if (kbhit())
         {
-            delay(100);
+            //delay(100);
             input();
         }
         update();
