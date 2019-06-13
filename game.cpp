@@ -130,20 +130,20 @@ layout l;
 bushes b;
 stickman s;
 int count = 0;
-//int jump_count = 0;
+int jump_count = 0;
 void input()
 {
 
     char ch;
 
     ch = getch();
-    if (ch == ' ')
-   // if (ch == ' ' && jump_count < 2)
+   // if (ch == ' ')
+    if (ch == ' ' && jump_count < 1)
     {
 
         jump = 1;
         start = 1;
-        //jump_count++;
+        jump_count++;
     }
     else if (ch == 'y')
     {
@@ -174,10 +174,7 @@ void update()
     {
         s.y = s.y + 10;
         count--;
-       // if(jump_count==2)
-        //{
-          //  jump_count=0;
-        //}
+       
     }
 
     b.d = b.d + b.speed;
@@ -236,6 +233,7 @@ int main()
         if (count == 0)
         {
             start = 0;
+            jump_count=0;
         }
         jump = 0;
         setcolor(BLACK);
