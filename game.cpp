@@ -223,7 +223,7 @@ void draw()
 int main()
 {
     int gd = DETECT, gm;
-    initgraph(&gd, &gm, "C:\\TC\\BGI");
+    initgraph(&gd, &gm, "E:\\PROJECTS\\TC\\BGI");
     setcolor(BLACK);
     cleardevice();
     l.start();
